@@ -1,15 +1,13 @@
 (function () {
     'use strict';
 
-    Lampa.Platform.tv();
+    var logName = "Hotkeys";
 
     var keyCodesUp = [166, 427, 27, 33, 402];
     var keyCodesDown = [167, 428, 28, 34, 403];
     var keyCodes0 = [48, 96, 11];
     var keyCodes5 = [53, 101, 6];
     var keyCodes8 = [56, 104, 9];
-
-    var logName = "Hotkeys";
 
     function log() {
         var args = Array.prototype.slice.call(arguments);
@@ -25,19 +23,26 @@
 
     function openPanel(element) {
         logt("openPanel:", element);
-        Lampa.Utils.trigger(document.querySelector(element), "hover:enter");
+        if (Lampa.Utils && typeof Lampa.Utils.trigger === 'function') {
+            var elem = document.querySelector(element);
+            if (elem) Lampa.Utils.trigger(elem, "hover:enter");
+        }
     }
 
     function listenDestroy() {
         logt("listenDestroy");
         document.removeEventListener("keydown", listenHotkeys);
-        Lampa.Player.listener.remove("destroy", listenDestroy);
+        if (Lampa.Player && Lampa.Player.listener) {
+            Lampa.Player.listener.remove("destroy", listenDestroy);
+        }
     }
 
     function startHotkeys() {
         logt("startHotkeys");
         document.addEventListener("keydown", listenHotkeys);
-        Lampa.Player.listener.follow("destroy", listenDestroy);
+        if (Lampa.Player && Lampa.Player.listener) {
+            Lampa.Player.listener.follow("destroy", listenDestroy);
+        }
     }
 
     function listenHotkeys(e) {
@@ -105,22 +110,53 @@
         return !document.querySelector("body.selectbox--open");
     }
 
-    function getTestMode() {
+    function getScriptByName(name) {
         try {
             var scripts = document.getElementsByTagName('script');
-            var currentScript = scripts[scripts.length - 1];
+            for (var i = 0; i < scripts.length; i++) {
+                if (scripts[i].src.indexOf(name) !== -1) {
+                    return scripts[i];
+                }
+            }
+            return null;
+        } catch (error) {
+            log("Error in getScriptByName:", error);
+            return null;
+        }
+    }
+
+    function getTestMode() {
+        try {
+            var currentScript = getScriptByName('hkt.js');
+            if (!currentScript) return false;
             var src = currentScript.src;
-            var hasParam = src.indexOf('?t=') !== -1 || src.indexOf('&t=') !== -1;
-            return hasParam;
+            return src.indexOf('?t') !== -1 || src.indexOf('&t') !== -1;
         } catch (error) {
             return false;
         }
     }
+      
+    if (typeof Lampa === 'undefined') {
+        log('Lampa not found');
+        return;
+    }
+    if (!Lampa.Platform || typeof Lampa.Platform.tv !== 'function') {
+        log('Lampa.Platform.tv not available');
+        return;
+    }
+
+    Lampa.Platform.tv();
 
     var isTestMode = getTestMode();
 
-    Lampa.Player.listener.follow("ready", startHotkeys);
-
     log("Hotkeys loaded");
     log("TestMode:", isTestMode);
+
+    if (Lampa.Player && Lampa.Player.listener) {
+        Lampa.Player.listener.follow("ready", startHotkeys);
+        log("Registered for player ready event");
+    } else {
+        log("Lampa.Player.listener not available");
+    }
+
 })();
