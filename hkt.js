@@ -3,13 +3,13 @@
 
   Lampa.Platform.tv()
 
-  const keyCodesUp = [166, 427, 27, 33, 402]
-  const keyCodesDown = [167, 428, 28, 34, 403]
-  const keyCodes0 = [48, 96, 11]
-  const keyCodes5 = [53, 101, 6]
-  const keyCodes8 = [56, 104, 9]
+  var keyCodesUp = [166, 427, 27, 33, 402]
+  var keyCodesDown = [167, 428, 28, 34, 403]
+  var keyCodes0 = [48, 96, 11]
+  var keyCodes5 = [53, 101, 6]
+  var keyCodes8 = [56, 104, 9]
 
-  const logName = "Hotkeys"
+  var logName = "Hotkeys"
 
   function log() {
     var args = Array.prototype.slice.call(arguments)
@@ -99,16 +99,16 @@
 
   function getTestMode() {
     try {
-      const currentScript = document.currentScript
-      const scriptUrl = new URL(currentScript.src)
-      const param_t = scriptUrl.searchParams.get("t")
+      var currentScript = document.currentScript
+      var scriptUrl = new URL(currentScript.src)
+      var param_t = scriptUrl.searchParams.get("t")
       return param_t !== null
     } catch (error) {
       return false
     }      
   }
 
-  const isTestMode = getTestMode()
+  var isTestMode = getTestMode()
 
   Lampa.Player.listener.follow("ready", startHotkeys)
   
@@ -116,3 +116,4 @@
   log("TestMode:", isTestMode)
 
 })()
+
