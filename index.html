@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WebOS Diagnostics</title>
+</head>
+<body>
+    <div id="diagnostics"></div>
+    
+    <script>
+    function runDiagnostics() {
+        var features = {
+            'ES6 const': (function() { try { eval('const x = 1;'); return true; } catch(e) { return false; } })(),
+            'ES6 let': (function() { try { eval('let x = 1;'); return true; } catch(e) { return false; } })(),
+            'Arrow functions': (function() { try { eval('var f = () => {};'); return true; } catch(e) { return false; } })(),
+            'Array.includes': !!Array.prototype.includes,
+            'URL Constructor': (function() { try { new URL('http://test.com'); return true; } catch(e) { return false; } })(),
+            'document.currentScript': !!document.currentScript,
+            'Promises': typeof Promise !== 'undefined',
+            'Fetch API': typeof fetch !== 'undefined',
+            'CSS Grid': CSS.supports('display', 'grid'),
+            'CSS Flexbox': CSS.supports('display', 'flex')
+        };
+        
+        var result = '<h2>WebOS Diagnostics</h2>';
+        result += '<p><strong>User Agent:</strong> ' + navigator.userAgent + '</p>';
+        result += '<p><strong>Platform:</strong> ' + navigator.platform + '</p>';
+        result += '<h3>Feature Support:</h3><ul>';
+        
+        for (var feature in features) {
+            result += '<li>' + feature + ': <strong>' + 
+                     (features[feature] ? '✅ SUPPORTED' : '❌ NOT SUPPORTED') + 
+                     '</strong></li>';
+        }
+        result += '</ul>';
+        
+        document.getElementById('diagnostics').innerHTML = result;
+        
+        // Вывод в консоль
+        console.log('=== WebOS Diagnostics ===');
+        console.log('UA:', navigator.userAgent);
+        console.log('Features:', features);
+    }
+    
+    document.addEventListener('DOMContentLoaded', runDiagnostics);
+    </script>
+</body>
+</html>
