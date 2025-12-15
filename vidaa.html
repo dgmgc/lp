@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html>
+<head>  
+
+    <title>Vidaa App Store</title> 
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+    <meta name="viewport" content="width=device-width, height=device-height">  
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.0/jquery.min.js"></script>
+    
+ <script type="text/javascript"> 
+ 
+var N = 100;
+var NP = 3;
+
+//localStorage.setItem('tp', 0);
+
+var LIST = [
+
+{appid:'anb_lampa',name:'Lampa',url:'http://lampa.mx/',text:'Новое полностью бесплатное приложение для Smart TV'},
+{appid:'anb_vokino',name:'vokino',url:'http://web.vokino.pro/',text:'Смотреть зарубежные фильмы и сериалы в хорошем качестве'},
+{appid:'anb_atodo',name:'Atodo',url:'http://msx.benzac.de/?start=menu:request:interaction:menu@http://atodo.fun/fun.html',text:'АТОDO'},
+{appid:'anb_fxml',name:'Media Station X',url:'http://msx.benzac.de/foxxum.html',text:'Приложение для создания настраиваемых мультимедийных страниц (видео, аудио и пр.)'},
+{appid:'anb_moovies',name:'Moovies',url:'http://msx.benzac.de/?start=menu:request:interaction:init@http://moovies.uz/index.html',text:'Moovies for MSX'},
+{appid:'anb_movielab',name:'Movielab',url:'https://msx.benzac.de/?start=menu:https://movielab.fun/msx/menu.json',text:'Наслаждайтесь просмотром лучших фильмов с MovieLab'},
+
+{appid:'anb_deeplex',name:'DEEPLEX',url:'http://smart.deeplex.cc',text:'Фильмы, сериалы и многое другое без ограничений.Инструкция -> http://deeplex.cc/#/instructions'},
+{appid:'anb_drmplay',name:'DRM-play',url:'http://drm-play.com',text:'Ott плеер drm-play, mod плеера ott-play by Alex '},
+//{appid:'anb_msx',name:'MSXPlayer',url:'http://msx.benzac.de/?welcome=menu:request:interaction:menu@http://plugins.msxplayer.ru/store.html',text:'Лаунчер приложений, TorrServer-клиент, FXML-браузер, IPTV-просмотр…'},
+{appid:'anb_fork',name:'ForkPlayer',url:'http://browser.appfxml.com/',text:'ForkPlayer — это браузер с адаптированным под ваше устройство просмотром сайтов'},
+{appid:'anb_forkbrowser',name:'Fork Browser',url:'http://browser.appinfo.su/',text:'Новая, улучшенная версия ForkPlayer'},
+{appid:'anb_lampalite4',name:'Lampa lite',url:'http://lite.lampa.mx/',text:'Lampa Lite, облегченная версия приложения для онлайн просмотра.'},
+{appid:'anb_twitch',name:'twitch',url:'https://hisense.tv.twitch.tv/',text:'Видеостриминговый сервис, специализирующийся на тематике компьютерных игр.'},
+
+{appid:'anb_vkvideo',name:'VK видео',url:'https://vk.ru/tv-app/lib?version=latest&platform=vidaa',text:'Смотрите видеозаписи ВКонтакте на большом экране SmartTV. '},
+{appid:'anb_beeline',name:'Билайн ТВ',url:'https://smart-vidaa.beeline.tv/',text:'Тысячи фильмов, сериалов и мультфильмов. 300 каналов и доступ к онлайн-кинотеатру beeline.tv.'},
+{appid:'anb_xsmart',name:'Xsmart',url:'http://app.xsmart.tv/?widg=5',text:'Приложение для Smart TV, которое объединяет в себе различные функции.'},
+//{appid:'anb_xsmartlite',name:'Xsmart classic',url:'http://app.xsmart.tv/?widg=lite',text:'Приложение для Smart TV, которое объединяет в себе различные функции. Lite версия приложения.'},
+{appid:'anb_viju',name:'Viju',url:'https://smarttv.viju.ru',text:'Viju – это лучшие фильмы, сериалы и мультфильмы по подписке'},
+//{appid:'anb_lava',name:'LAVA',url:'https://html5.lavaonline.tv',text:'Площадка для бесплатного просмотра современного российского кино'},
+{appid:'anb_tiktok',name:'TikTok',url:'https://tv.tiktok.com/webos',text:'Ведущая видеоплатформа для коротких видео'},
+{appid:'anb_m3uiptv',name:'M3U IPTV',url:'https://m3u-ip.tv/lg/',text:'Просто загрузите свой плейлист IPTV по URL-адресу (в виде файла m3u или m3u8) и вперед'},
+
+{appid:'anb_kinopoisk',name:'Кинопоиск',url:'https://smarttv-app.ott.yandex.ru/?ott-rv=vidaa',text:'Крупнейший русскоязычный онлайн-кинотеатр.'},
+{appid:'anb_yandexvideo',name:'Яндекс видео',url:'https://yandex.ru/video/tvapp/?ui=tvapp',text:'Cмотреть телепередачи, музыкальные клипы, игровые ролики и популярное на YouTube'},
+{appid:'anb_ott',name:'OttPlayer',url:'http://widget.ottplayer.tv/operatv2/index.html',text:'Cервис, который позволяет вам собрать всё ваше IP-телевидение в одном плейлисте.'},
+{appid:'anb_ottold',name:'OttPlayerTest',url:'http://widget.ottplayer.tv/test/index.html',text:'OttPlayer, более новая(тестовая версия приложения)'},
+{appid:'anb_wink',name:'Wink',url:'https://production-vidaa-fhd.wink.ru/',text:'Цифровой видеосервис компании «Ростелеком»'},
+{appid:'anb_kion',name:'Кион',url:'http://hkion.kion.ru/',text:'Российская мультимедийная онлайн-платформа, созданная компанией МТС'},
+
+{appid:'anb_ssiptv',name:'ssiptv',url:'http://app.ss-iptv.com',text:'Медиа сервер для просмотра фильмов, сериалов, мультфильмов и пр.'},
+{appid:'anb_icva',name:'ICVA',url:'http://icva.mx/',text:'ICVA - новое приложение для просмотра IPTV каналов'},
+{appid:'anb_tvap',name:'TVap',url:'http://tvphone.site/',text:'TVap - просмотр IPTV каналов на Smart TV'},
+{appid:'anb_peers',name:'PeersTV',url:'http://smarttv.peers.tv/hisense/hisense-1.0.0/',text:'Бесплатное приложение для просмотра ТВ онлайн и в записи. Лайт версия без рекламы'},
+{appid:'anb_bonus',name:'Бонус ТВ',url:'http://app.bonus-tv.ru/lg/',text:'Телевидение онлайн на смартфоне, планшете, Smart-телевизоре или ТВ-приставке.'},
+{appid:'anb_amediateka',name:'Aмедиатека',url:'https://smarttv-stable.amediateka.tech/hisense/',text:'Онлайн-сервис Амедиатека и телеканалы AMEDIA TV. Лучшие сериалы планеты'},
+
+//{appid:'anb_forkbrowser',name:'Fork Browser',url:'http://browser.appinfo.su/',text:'Новая, улучшенная версия ForkPlayer'},
+{appid:'anb_prisma',name:'Prisma',url:'http://prisma.ws/',text:'Полностью готовый к работе форк Lampa.'},
+//{appid:'anb_ott',name:'OttPlayer',url:'http://widget.ottplayer.tv/operatv2/index.html',text:'Cервис, который позволяет вам собрать всё ваше IP-телевидение в одном плейлисте.'},
+//{appid:'anb_ottold',name:'OttPlayerTest',url:'http://widget.ottplayer.tv/test/index.html',text:'OttPlayer, более новая(тестовая версия приложения)'},
+{appid:'anb_gets',name:'GetsTV',url:'https://getstv.com/app/',text:'Приложение для просмотра ТВ, фильмов и сериалов.'},
+{appid:'anb_ottplay_mod',name:'OTT-Play FOSS',url:'http://ott.prog4food.eu.org/f/',text:' Moд iptv плеера Ott-Play by Alex. Отсутствие баннеров и блокировки каналов.'},
+{appid:'anb_kinopub',name:'KinoPubTV',url:'http://cdnservices.link',text:'Неофициальный клиент для популярного онлайн-кинотеатра'},
+//{appid:'anb_kinopub2',name:'KinoPubTV',url:'https://kpms.cc',text:'Неофициальный клиент для популярного онлайн-кинотеатра.'},
+//{appid:'anb_kinopub2',name:'KinoPub',url:'http://kpstv.net/app/hisense/',text:'Еще один неофициальный клиент для онлайн-кинотеатра kinopub'},
+{appid:'anb_lampaun',name:'ByLampa',url:'http://bylampa.online/',text:'Неофициальный форк онлайн-кинотеатра Lampa'},
+{appid:'anb_lampaland',name:'Lampa.land',url:'http://lampa.land',text:'Проект, созданный для тех, кто не может самостоятельно настроить приложение Lampa'},
+
+
+{appid:'anb_iptvportal',name:'IPTVPORTAL',url:'http://go.iptvportal.ru/?screen=1280x720&user-agent=lg',text:'Просмотр IPTV из сетей провайдеров, подключенных к платформе IPTVPORTAL'},
+{appid:'anb_oneplayer',name:'Oneplayer',url:'http://webos.oneplayer.me/',text:'Интернет-плеер с широким функционалом'},
+{appid:'anb_clouddy',name:'ClouDDy',url:'http://player.clouddy.online/',text:'Продвинутый и удобный медиаплеер для воспроизведения вашего любимого медиаконтента.'},
+{appid:'anb_smotreshka',name:'Смотрешка',url:'https://smotreshka.webapp.lfstrm.tv/loaders/vidaa/index.html',text:'Современное интерактивное телевидение'},
+{appid:'anb_ivikids',name:'IVI детям',url:'http://lgkids.ivi.ru',text:'Приложение, сделанное специально для детей! Мультики, фильмы и сериалы'},
+{appid:'anb_viloud',name:'Viloud',url:'https://app.viloud.tv//smarttv//v2//?associate=fox-a5f1&app=ef2b1dd758eb0fcc065561e1275e4af6#viloud',text:'Самая Простая и Доступная Онлайн-Видеоплатформа'},
+
+{appid:'anb_vevo',name:'Vevo',url:'https://hisense.vevo.com',text:'Музыкальное видео от крупнейших звукозаписывающих корпораций'},
+{appid:'anb_webvideocast2',name:'Web Video Cast',url:'http://vewd.webvideocaster.com/',text:'Позволяет вам транслировать любое видео, найденное на веб-сайтах, на ваш телевизор.'},
+{appid:'anb_sweet',name:'sweet.tv',url:'http://foxxum240.sweet.tv',text:'Бесплатное онлайн телевидение в хорошем качестве. Телеканалы в прямом эфире и в записи!'},
+{appid:'anb_stranafm',name:'Страна FM',url:'http://stranafm.bonus-tv.ru/stranafm/nettv/',text:'Страна FM — российский коммерческий развлекательный телеканал. Музыка нон стоп'},
+{appid:'anb_premier',name:'PREMIER',url:'https://hisensesmarttv.premier.one/hisense/#/main',text:'ТНТ премьер. Новые русские сериалы, фильмы и шоу.'},
+{appid:'anb_mytuner',name:'myTuner Radio',url:'https://devices.mytuner.mobi/?utm_source=Foxxum',text:'Удобное прослушивание более 30 000 популярных радиостанций 120 стран мира'},
+
+{appid:'anb_zaycev',name:'Zaycev FM',url:'https://tv.zaycev.fm/index.html',text:'Любимая музыка теперь всегда будет с вами вместе с онлайн радио Zaycev.fm!'},
+{appid:'anb_ctc',name:'СТС',url:'http://smarttv.ctc.ru',text:'Все самые интересные сериалы, популярные программы и мультфильмы телеканала СТС'},
+{appid:'anb_siptv',name:'Smart IPTV',url:'http://opera.siptv.eu',text:'Play IPTV streams, videos on your Smart TV'},
+{appid:'anb_ttktv',name:'ТТК ТВ',url:'http://eltex-web.ls.tv.ttk.ru',text:'Приложение для просмотра любимых фильмов, сериалов, мультфильмов и телевизионных программ'},
+{appid:'anb_sibseti',name:'Tв Сибсети',url:'http://smarty.nsk.211.ru',text:'IPTV для абонентов Сибсети. Создай свой личный медиацентр с нашим приложением!'},
+{appid:'anb_zefirtv',name:'Зефир ТВ',url:'http://webkit.zt.platform24.tv/',text:'ТВ-каналы, фильмы, сериалы, спорт'},
+
+{appid:'anb_smotrim',name:'Смотрим',url:'https://tv.smotrim.ru/',text:'Новости, ток-шоу, документальные и художественные фильмы, телесериалы и пр.'},
+{appid:'anb_moovi',name:'moovi',url:'http://base.portal.moovi-iptv.ru/ui/1280/index.html?rand=0.3412177627522204',text:'Кабельное Телевидение Moovi. Современный формат цифрового телевидения.'},
+{appid:'anb_tvoe',name:'TVOE',url:'https://app.tvoe.live?device=smart-tv&installed=vidaa',text:'Тысячи фильмов и сериалов'},
+{appid:'anb_emby',name:'Emby',url:'http://tv.emby.media/',text:'Медиа-сервер и домашний кинотеатр. Позволяет скачивать фильмы, сериалы и добавлять их в каталог.'},
+{appid:'anb_24_1',name:'24tv',url:'http://webkit.24h.tv',text:'24ТВ Всё ТВ и кинотеатры в одном приложении'},
+{appid:'anb_IDC',name:'IDC Smart TV',url:'https://smart.iptv.idc.md',text:'Приложение от крупнейшего телекоммуникационного оператора на территории Приднестровья'},
+
+{appid:'anb_stremio',name:'Stremio',url:'https://tv.strem.io',text:'Stremio – программа для просмотра видео-контента различных известных онлайн-сервисов'},
+{appid:'anb_tytkino',name:'Тут Кино',url:'http://fork-p0rtal.ru/project/',text:'Виджет для SmartTV от fork-portal.ru на движке VPlay.'},
+{appid:'anb_impareboom',name:'ИмперияBOOM',url:'http://web.imboom.ru/',text:'Твой HD кинотеатр. Новинки кино и сериалы без навязчивой рекламы'},
+//{appid:'anb_kb_msx',name:'KinoBoom',url:'http://msx.benzac.de/?start=content:http://kb-team.club/msx/enter.php',text:'Новинки кино и сериалы'},
+{appid:'anb_djin',name:'HDGO',url:'http://hdgo.me/',text:'Полностью готовый к работе форк Lampa Lite'},
+
+{appid:'anb_popkorn',name:'Попкорн',url:'https://tv-desktop.beepopcorn.ru',text:'Бесплатное ТВ, фильмы, сериалы, видеоблоги и караоке'},
+{appid:'anb_filmix',name:'Filmix',url:'http://filmix.tv',text:'Приложение для просмотра фильмов и сериалов с популярного онлайн кинотеатра filmix.tv'},
+{appid:'anb_akter',name:'AKTER BLACK',url:'http://abvidaa.ru',text:'Уютное киноубежище - онлайн кинотеатр AKTER BLACK'},
+{appid:'anb_movix',name:'Movix',url:'http://cdn.smarttv.domru.ru/hisense/',text:'Устройте онлайн-кинотеатр у себя дома вместе с Movix!'},
+{appid:'anb_jellyfin',name:'jellyfin',url:'https://jellyfin-vidaa.vercel.app',text:'Бесплатный и свободный медиасервер'},
+//{appid:'anb_m3uiptv',name:'M3U IPTV',url:'vidaa-store',text:'Просто загрузите свой плейлист IPTV по URL-адресу (в виде файла m3u или m3u8) и вперед'},
+{appid:'anb_farlinetv',name:'Фарлайн ТВ',url:'http://tv.farline.net',text:'Смотрите наше интерактивное телевидение онлайн в любое удобное для вас время! Фильмы, мультфильмы, шоу и новости.'},
+{appid:'anb_sevstartv',name:'Севстар Tв',url:'http://tvs.sevstar.net',text:'Приложение для просмотра пакетов Цифрового телевидения от компании Севстар'},
+{appid:'anb_focustv',name:'Фокус Лайф',url:'http://tv.focus.life/',text:'Приложение для просмотра пакетов Цифрового телевидения от компании Фокус Лайф'},
+]
+
+var HD ='696aa22fc375afab73c223bf8c049f38f7cb8a48cebf3cc26b4204898386d1bfdb9b125c8eb848af60b9005e79377e4db85f8ee66e198881396f63835c5971aebcc7d09c42f22021ad8f9cb112caafa5d159aa25dab91ad8e60dee1c12e09a14a9eeca1ca2e7d3b93fc86a8b88551214c403c880e298212f39e564b46973a5a0';
+var MC = 0;
+var UI = 'https://vidaa.surge.sh/images_ui/';
+var timg = 'http://195.58.50.236/';
+var CW = '#fafafa';
+var CB = '#0f0f0f';
+var M = ['48', '49', '50', '51', '52', '53', '54', '55', '56', '57'];
+var str  = '==========> ';
+var tp = 0;
+
+var _0x1da5f6=_0x58e4;(function(_0x579b4b,_0x143082){var _0x498733=_0x58e4,_0x5d0328=_0x579b4b();while(!![]){try{var _0x19ad4a=parseInt(_0x498733(0x104))/0x1+-parseInt(_0x498733(0x13b))/0x2+-parseInt(_0x498733(0x16f))/0x3*(-parseInt(_0x498733(0x1a0))/0x4)+parseInt(_0x498733(0x14d))/0x5+parseInt(_0x498733(0x118))/0x6+-parseInt(_0x498733(0x155))/0x7*(-parseInt(_0x498733(0x19b))/0x8)+parseInt(_0x498733(0x161))/0x9*(-parseInt(_0x498733(0x17f))/0xa);if(_0x19ad4a===_0x143082)break;else _0x5d0328['push'](_0x5d0328['shift']());}catch(_0x52ad57){_0x5d0328['push'](_0x5d0328['shift']());}}}(_0x1ffa,0x91d9a));var _0x164a9d=(function(){var _0x48b5c2=!![];return function(_0x55f68a,_0x4b9756){var _0x4fa87d=_0x48b5c2?function(){var _0x49e78b=_0x58e4;if(_0x4b9756){var _0x2a2d91=_0x4b9756[_0x49e78b(0xf9)](_0x55f68a,arguments);return _0x4b9756=null,_0x2a2d91;}}:function(){};return _0x48b5c2=![],_0x4fa87d;};}()),_0x5ddeb1=_0x164a9d(this,function(){var _0x3ab65e=_0x58e4;return _0x5ddeb1[_0x3ab65e(0x197)]()[_0x3ab65e(0x175)](_0x3ab65e(0x150))[_0x3ab65e(0x197)]()[_0x3ab65e(0x169)](_0x5ddeb1)[_0x3ab65e(0x175)](_0x3ab65e(0x150));});_0x5ddeb1();var _0x17d0df=(function(){var _0xcfbcdd=!![];return function(_0x3bbfd9,_0x4e765e){var _0x4c08dd=_0xcfbcdd?function(){var _0x319000=_0x58e4;if(_0x4e765e){var _0x49158e=_0x4e765e[_0x319000(0xf9)](_0x3bbfd9,arguments);return _0x4e765e=null,_0x49158e;}}:function(){};return _0xcfbcdd=![],_0x4c08dd;};}()),_0x36714f=_0x17d0df(this,function(){var _0x339280=_0x58e4,_0x4d54a7;try{var _0x25b27b=Function('return\x20(function()\x20'+'{}.constructor(\x22return\x20this\x22)(\x20)'+');');_0x4d54a7=_0x25b27b();}catch(_0x455cfc){_0x4d54a7=window;}var _0x5ca39b=_0x4d54a7[_0x339280(0x17b)]=_0x4d54a7[_0x339280(0x17b)]||{},_0xe99490=[_0x339280(0x120),_0x339280(0x15e),_0x339280(0x111),_0x339280(0x147),_0x339280(0x19c),_0x339280(0x17c),_0x339280(0xfc)];for(var _0x4aac9e=0x0;_0x4aac9e<_0xe99490[_0x339280(0x1a6)];_0x4aac9e++){var _0x89a844=_0x17d0df[_0x339280(0x169)][_0x339280(0x1ae)]['bind'](_0x17d0df),_0x114cae=_0xe99490[_0x4aac9e],_0x5b3488=_0x5ca39b[_0x114cae]||_0x89a844;_0x89a844[_0x339280(0x1aa)]=_0x17d0df['bind'](_0x17d0df),_0x89a844[_0x339280(0x197)]=_0x5b3488['toString']['bind'](_0x5b3488),_0x5ca39b[_0x114cae]=_0x89a844;}});_0x36714f();var console_log=function(){};typeof console!='undefined'&&typeof console['log']!='undefined'&&(console_log=console[_0x1da5f6(0x120)]);console[_0x1da5f6(0x120)]=function(_0x1bfb93){var _0x2fbe79=_0x1da5f6;console_log(_0x1bfb93);var _0x2862b8='';typeof _0x1bfb93==_0x2fbe79(0x114)?_0x2862b8=JSON&&JSON[_0x2fbe79(0x1ad)]?JSON[_0x2fbe79(0x1ad)](_0x1bfb93):_0x1bfb93:_0x2862b8=_0x1bfb93,$(_0x2fbe79(0x158))[_0x2fbe79(0x173)](_0x2fbe79(0x1a2)+_0x2862b8+_0x2fbe79(0x178))[_0x2fbe79(0x11b)]({'scrollTop':$(_0x2fbe79(0x158))[_0x2fbe79(0x15d)](_0x2fbe79(0x1a5))},0x2bc);},console[_0x1da5f6(0x147)]=console[_0x1da5f6(0x130)]=console['info']=console[_0x1da5f6(0x120)];function _0x1ffa(){var _0x4468bf=['img/','4276425xIcWRs','195.58.50.236','data','(((.+)+)+)+$','mouseout','U06','INSTALLATION\x20FAILED','.APP','7680568YuquCE','indexOf','<br>','.debug','||\x20Date\x20','<div>','>\x20DNS\x20','attr','prop','warn','AppInfo','<button\x20id=\x22save\x22\x20onclick=\x22save()\x22>INSTALL</button>','17053083aErkUQ','keyCode','<div\x20class=\x22di\x22><p>Thumbnail\x20<input\x20\x20type=\x22text\x22\x20id=\x22thumbnail\x22></p></div>','appControl','url','appid','.CBGbtn\x20,\x20.CBYbtn,\x20.CBRbtn,\x20.text,\x20.tile:hover\x20.text,\x20.APP,\x20.di,\x20#console,\x20#save,\x20#comb,\x20#appName,\x20#appUrl,\x20#thumbnail','-\x20Debug\x20Page\x20-','constructor','updateAppState','\x20TV\x20detected','\x20/></div>','split','<div><img\x20src\x20=','438OsNVwu','border','addClass','<div\x20class=\x22button\x22>УДАЛИТЬ</div>','append','sraf_ext','search','<div\x20class=\x22di\x22><p>You\x20have\x20installed\x20<font-size:32px>','getElementById','</p>','images/','.install','console','table','slice','source','10rGhWfn','Wink','#shop,\x20.CBGbtn','hisense','.icon\x20img','pop','||\x20Hisense_installApp\x20','keydown','API\x20LOG','value','#debugon','options','.btn-info\x20,\x20.btn-danger,\x20.nokey','U08','ready','AppName','</div><div\x20class=\x22text\x22>\x20<b>─\x20','.CBGbtn','anb_icon.png','Билайн\x20ТВ','0\x200\x2017px\x2017px','translateY(-615px)','slideDown','selectedIndex','toString','>\x20TYPE\x20','#container','getUTCDate','8pYMOyK','exception','http','translateY(-336px)','innerText','16276iGxoGN','browser','<p>','#empty_tile','getItem','scrollHeight','length','removeItem','#container,\x20.CBRbtn','getInstalledAppJsonObj\x20fail!','__proto__','appName','0px\x200px\x200px\x202px','stringify','prototype','TikTok','comb','removeClass','.uninstall','some','.icon','hide','App\x20Name\x20and\x20App\x20Url\x20could\x20not\x20be\x20null\x20!','#save','.debimg','type','apply','\x20app\x20INSTALLATION\x20COMPLETED\x20!','setItem','trace','ТТК\x20ТВ','Get\x20Log','name','APPMessage','omi_platform','text','Unlocked\x20!\x20Your\x20Master\x20Key:\x20','599899WGKmkB','</div><div\x20class=\x22nam\x22\x20>нажмите\x20OK\x20для\x20установки</div>','1px\x20solid','debig','getLog','disabled','.nokey','scale(1.4)\x20translate(315px,\x20130px)','src','KEY','https://vidaa.do.am/images/','NET\x20LOG','-38px','info','action','preventDefault','object','store','sendPlatformMessage','css','1369038hrnwos','slideUp','.nam,\x20.name,\x20.V','animate','2px\x20solid','INPUT','.ticon,\x20.btn-danger,\x20.btn-info,\x20.nokey,\x20input,\x20\x20#save,\x20select,\x20.debimg','.CBRbtn','log','Thumb','find','close','SIN','OpenDebugPort\x20successed,\x20please\x20reboot\x20TV\x0a\x0d','click','FirmWare\x20Version\x20:\x20','Error\x20uninstall\x20app','transform','.CBRbtn,\x20.CBYbtn','getting\x20log\x20from\x20TV...Please\x20wait\x20on\x20\x0a\x0d','.png','||\x20Country_Code\x20','\x20/\x20','Debug\x20Off','debug','Your\x20master\x20key:\x20','translateY(0px)','input,\x20\x20#save,\x20select','<div\x20class=\x22debimg\x22>\x20<img\x20src=\x22\x22\x20/>\x20</div>','groupCollapsed','</div>','<div\x20class=\x22di\x22><p>App\x20Name\x20<input\x20id=\x22appName\x22\x20type=\x22text\x22></p></div>','NO\x20GetMacAddress\x20API,\x20ERROR\x20!!','undefined','<div\x20class=\x22di\x22><p>App\x20Url\x20<input\x20\x20type=\x22text\x22\x20id=\x22appUrl\x22></p></div>','1764932QSNhgA','Debug\x20On','\x20app\x20uninstalled\x20success\x20!\x20','join','\x20,\x20please\x20provide\x20another\x20one!\x0a\x0d','getUTCDay','File','push','findIndex','param','key','startAppType','error','each','thumbnail','.text','html'];_0x1ffa=function(){return _0x4468bf;};return _0x1ffa();}try{var mac=Hisense_GetMacAddress(),D16=mac['split'](':'),D10=[parseInt(D16[0x0],0x10),parseInt(D16[0x1],0x10),parseInt(D16[0x2],0x10),parseInt(D16[0x3],0x10),parseInt(D16[0x4],0x10),parseInt(D16[0x5],0x10)][_0x1da5f6(0x13e)]('');SMAP=[M[D10[MC]],M[D10[MC+0x1]],M[D10[MC+0x2]],M[D10[MC+0x3]],M[D10[MC+0x4]],M[D10[MC+0x5]]],arm1='\x20'+str[_0x1da5f6(0x16d)]('',D10[MC])[_0x1da5f6(0x13e)]('')+_0x1da5f6(0x198)+str[_0x1da5f6(0x16d)]('',D10[MC+0x1])[_0x1da5f6(0x13e)]('')+'>\x20',arm2='\x20'+str[_0x1da5f6(0x16d)]('',D10[MC+0x2])[_0x1da5f6(0x13e)]('')+_0x1da5f6(0x15b)+str['split']('',D10[MC+0x3])[_0x1da5f6(0x13e)]('')+'>\x20',arm3='\x20'+str[_0x1da5f6(0x16d)]('',D10[MC+0x4])[_0x1da5f6(0x13e)]('')+'>\x20MAC\x20'+str['split']('',D10[MC+0x5])['join']('')+'>\x20';}catch(_0x3a2503){console[_0x1da5f6(0x120)](_0x1da5f6(0x138));}try{var R=Hisense_Decrypt(HD);MAP=[M[R[N]],M[R[N+0x1]],M[R[N+0x2]],M[R[N+0x3]]],arr=arr2='||++++';}catch(_0x47c719){var date=new Date(),day=date[_0x1da5f6(0x19a)](),dayWeek=[0x7,0x1,0x2,0x3,0x4,0x5,0x6][date[_0x1da5f6(0x140)]()],weekOfMonth=(0x0|date[_0x1da5f6(0x19a)]()/0x7)+0x1,dig=day[_0x1da5f6(0x197)]()[_0x1da5f6(0x16d)]('');d0=M[dig[0x0]],d1=M[dig[0x1]];dig<0xa&&(d1=d0,d0=M[0x0]);;MAP=[d0,M[dayWeek],M[weekOfMonth],d1],arr='||'+str[_0x1da5f6(0x16d)]('',dayWeek)[_0x1da5f6(0x13e)]('')+'\x20'+str[_0x1da5f6(0x16d)]('',0xa-dayWeek)['join'](''),arr2='||'+str[_0x1da5f6(0x16d)]('',weekOfMonth)['join']('')+'\x20'+str['split']('',0xa-weekOfMonth)[_0x1da5f6(0x13e)]('');};$(document)[_0x1da5f6(0x18d)](function(){var _0x15e015=_0x1da5f6;localStorage['getItem'](_0x15e015(0x145))!==null?(key=localStorage[_0x15e015(0x1a4)](_0x15e015(0x145)),key++,localStorage['setItem'](_0x15e015(0x145),key),$(_0x15e015(0x12a))['removeClass']('hide')):key=![];;localStorage[_0x15e015(0x1a4)]('tp')!==null&&(tp=localStorage[_0x15e015(0x1a4)]('tp'));;typeof Hisense_installApp!='undefined'?($('.CBGbtn')[_0x15e015(0x1b1)](_0x15e015(0xf4)),aboutTV(),$[_0x15e015(0x148)](LIST,function(_0x2d9a2f,_0x3180ab){addTile(_0x3180ab);})):$('#nosupport')[_0x15e015(0x1b1)](_0x15e015(0xf4));});try{var OS=Hisense_GetOSVersion();if(OS[_0x1da5f6(0x156)]('U6')>=0x0||OS[_0x1da5f6(0x156)](_0x1da5f6(0x152))>=0x0||OS[_0x1da5f6(0x156)]('U07')>=0x0||OS[_0x1da5f6(0x156)]('U7')>=0x0||OS[_0x1da5f6(0x156)](_0x1da5f6(0x18c))>=0x0||OS[_0x1da5f6(0x156)]('U8')>=0x0)var fimg=_0x1da5f6(0x14c);else{if(OS[_0x1da5f6(0x156)]('U04')>=0x0||OS[_0x1da5f6(0x156)]('U4')>=0x0){key=0x4;var fimg='images/';}else var fimg=_0x1da5f6(0x179);}}catch(_0x496245){var fimg=_0x1da5f6(0x179);}var jsObj=undefined,installedApps=[];try{jsObj=getInstalledAppJsonObj();var i;for(i=0x0;i<jsObj[_0x1da5f6(0x15f)][_0x1da5f6(0x1a6)];i++){jsObj['AppInfo'][i]['Id']['indexOf']('debug')>=0x0&&installedApps[_0x1da5f6(0x142)](jsObj['AppInfo'][i]);}}catch(_0x54089a){console[_0x1da5f6(0x147)](_0x1da5f6(0x1a9));}if(!!window[_0x1da5f6(0x174)]){$(_0x1da5f6(0x14b))[_0x1da5f6(0x117)]({'transform':_0x1da5f6(0x10b)}),key=0x3;var fimg=_0x1da5f6(0x14c);}function addTile(_0x4a8cda){var _0x12f25d=_0x1da5f6,_0x5c992e=timg+fimg+_0x4a8cda[_0x12f25d(0x166)]+_0x12f25d(0x12c),_0x38749a=UI+_0x4a8cda['appid']+_0x12f25d(0x12c),_0x5efc12=$('#container'),_0x55010f=$(_0x12f25d(0x1a3))['clone']();_0x55010f[_0x12f25d(0x122)](_0x12f25d(0x183))[_0x12f25d(0x15c)](_0x12f25d(0x10c),_0x38749a),_0x55010f[_0x12f25d(0x122)]('.name')[_0x12f25d(0x102)](_0x4a8cda[_0x12f25d(0xff)]),_0x55010f[_0x12f25d(0x122)]('.ticon')[_0x12f25d(0x102)](_0x4a8cda[_0x12f25d(0xff)]),_0x55010f['find'](_0x12f25d(0x14a))[_0x12f25d(0x102)](_0x4a8cda['text']),_0x55010f[_0x12f25d(0x122)](_0x12f25d(0x17a))['html']('<div\x20class=\x22name\x22>'+_0x4a8cda['name']+_0x12f25d(0x136)+'<div\x20class=\x22text\x22>'+_0x4a8cda['text']+_0x12f25d(0x105)),_0x55010f[_0x12f25d(0x122)](_0x12f25d(0x17a))[_0x12f25d(0x14f)](_0x12f25d(0x166),_0x4a8cda[_0x12f25d(0x166)]),_0x55010f[_0x12f25d(0x1b1)]('hide'),_0x5efc12[_0x12f25d(0x173)](_0x55010f);var _0x1374b2=_0x4a8cda[_0x12f25d(0xff)]+'debug',_0x42d50a='store';(_0x4a8cda[_0x12f25d(0xff)]==_0x12f25d(0x180)||_0x4a8cda['name']==_0x12f25d(0xfd)||_0x4a8cda[_0x12f25d(0xff)]==_0x12f25d(0x1af)||_0x4a8cda[_0x12f25d(0xff)]==_0x12f25d(0x192))&&(_0x42d50a=_0x12f25d(0x182));;localStorage['getItem']('bc')!=_0x12f25d(0x139)&&colorTABLE(localStorage['getItem']('bc'),localStorage[_0x12f25d(0x1a4)]('c'));;localStorage[_0x12f25d(0x1a4)]('bc')!=CW&&localStorage[_0x12f25d(0x1a4)]('bc')!=CB&&colorTABLE(CW,CB);;localStorage['getItem']('tp')!=_0x12f25d(0x139)&&localStorage[_0x12f25d(0x1a4)]('tp')==0x0&&$(_0x12f25d(0xf3))['addClass'](_0x12f25d(0xf4));;var _0x5c16b7=LIST[_0x12f25d(0x143)](_0x431be4=>_0x431be4['name']==_0x4a8cda[_0x12f25d(0xff)]);if(_0x5c16b7<0xc||_0x5c16b7>0x1d&&_0x5c16b7<0x24)var _0x4ba04c=![];else var _0x4ba04c=!![];_0x55010f['mouseenter'](function(){var _0x218e2e=_0x12f25d;$(_0x218e2e(0x154))['text'](_0x5c16b7+0x1+_0x218e2e(0x12e)+LIST[_0x218e2e(0x1a6)]),_0x55010f['mouseover'](function(){var _0x41f35f=_0x218e2e;$(_0x41f35f(0x154))[_0x41f35f(0x1b1)](_0x41f35f(0xf4));}),_0x55010f[_0x218e2e(0x151)](function(){var _0xa168d4=_0x218e2e;$(_0xa168d4(0x154))[_0xa168d4(0x171)](_0xa168d4(0xf4));});_0x5c16b7+0x1>0x18&&lc==0x0&&($(_0x218e2e(0x199))[_0x218e2e(0x117)]('transform',_0x218e2e(0x19e)),lc=0x1);_0x5c16b7+0x1<0x19&&lc==0x1&&($(_0x218e2e(0x199))[_0x218e2e(0x117)](_0x218e2e(0x129),_0x218e2e(0x132)),lc=0x0);_0x5c16b7+0x1>0x30&&lc==0x1&&($('#container')[_0x218e2e(0x117)](_0x218e2e(0x129),_0x218e2e(0x194)),lc=0x2);_0x5c16b7+0x1<0x31&&lc==0x2&&($('#container')[_0x218e2e(0x117)](_0x218e2e(0x129),_0x218e2e(0x19e)),lc=0x1);_0x5c16b7+0x1==NP?ky=0x1:ky=0x0;_0x4ba04c==![]&&key==![]?(_0x55010f[_0x218e2e(0x122)](_0x218e2e(0x10a))['html'](_0x218e2e(0x18f)+_0x4a8cda[_0x218e2e(0xff)]+'\x20─</b><br><br>Недоступно\x20в\x20DЕMO\x20версии</div>'),_0x55010f['find'](_0x218e2e(0x10a))[_0x218e2e(0x1b1)](_0x218e2e(0xf4))):_0x55010f[_0x218e2e(0x122)](_0x218e2e(0x17a))['click'](function(){var _0x31b158=_0x218e2e;Hisense_installApp(_0x1374b2,_0x4a8cda['name'],_0x5c992e,_0x5c992e,_0x5c992e,_0x4a8cda[_0x31b158(0x165)],_0x42d50a,function(_0x65f631){var _0x4f9e0f=_0x31b158;_0x65f631?consoleGroup('NO','-',_0x4f9e0f(0x153),'-'):(consoleGroup('OK','-',_0x4a8cda[_0x4f9e0f(0xff)]+_0x4f9e0f(0xfa),'-'),_0x55010f[_0x4f9e0f(0x122)](_0x4f9e0f(0x17a))[_0x4f9e0f(0x119)](0x1f4),_0x55010f[_0x4f9e0f(0x122)]('.V')[_0x4f9e0f(0x1b1)](_0x4f9e0f(0xf4)),refreshAppsOnHisenseUI(_0x1374b2));});});_0x55010f[_0x218e2e(0x122)](_0x218e2e(0xf1))[_0x218e2e(0x14b)](_0x218e2e(0x172)+_0x4a8cda[_0x218e2e(0xff)]),_0x55010f[_0x218e2e(0x122)](_0x218e2e(0xf1))[_0x218e2e(0x126)](function(){Hisense_uninstallApp(_0x1374b2,function(_0x463972){var _0x3ed07b=_0x58e4;!_0x463972?console[_0x3ed07b(0x120)](_0x3ed07b(0x128)):(consoleGroup('ОК','-',_0x4a8cda[_0x3ed07b(0xff)]+_0x3ed07b(0x13d),'-'),_0x55010f[_0x3ed07b(0x122)](_0x3ed07b(0x17a))[_0x3ed07b(0x195)](0x1f4),_0x55010f[_0x3ed07b(0x122)]('.V')[_0x3ed07b(0x171)]('hide'),refreshAppsOnHisenseUI(_0x1374b2));});});if(installedApps[_0x218e2e(0x1a6)]>0x0)for(var _0x2327e4=0x0;_0x2327e4<installedApps[_0x218e2e(0x1a6)];_0x2327e4++){_0x4a8cda[_0x218e2e(0xff)]===installedApps[_0x2327e4][_0x218e2e(0x18e)]&&(_0x55010f[_0x218e2e(0x122)](_0x218e2e(0x17a))[_0x218e2e(0x171)](_0x218e2e(0xf4)),_0x55010f['find']('.V')[_0x218e2e(0x1b1)](_0x218e2e(0xf4)));}});}var lc=tt=cg=X=Y=0x0;document['addEventListener'](_0x1da5f6(0x186),function(_0x40ae61){var _0x276556=_0x1da5f6;!key&&ky==0x1&&(this['INPUT']=this[_0x276556(0x11d)]||[],this[_0x276556(0x11d)][_0x276556(0x1a6)]<=MAP[_0x276556(0x1a6)]?this[_0x276556(0x11d)]['push'](_0x40ae61[_0x276556(0x162)]):this['INPUT']=[],this[_0x276556(0x11d)][_0x276556(0xf2)]((_0x52f93c,_0x350d0e)=>MAP[_0x350d0e]!=_0x52f93c)&&(this[_0x276556(0x11d)]=[]),this[_0x276556(0x11d)]['join']()===MAP[_0x276556(0x13e)]()&&(key=0x1,localStorage[_0x276556(0xfb)](_0x276556(0x145),key),consoleGroup(_0x276556(0x10d),'-',_0x276556(0x103)+D10['slice'](0x0,0x6),'-'),$('.nokey')[_0x276556(0x171)](_0x276556(0xf4)),$(_0x276556(0x12a))[_0x276556(0x1b1)]('hide'),this[_0x276556(0x11d)]=[]));!key&&(this[_0x276556(0x124)]=this['SIN']||[],this[_0x276556(0x124)]['length']<=SMAP[_0x276556(0x1a6)]?this['SIN'][_0x276556(0x142)](_0x40ae61[_0x276556(0x162)]):this[_0x276556(0x124)]=[],this['SIN'][_0x276556(0xf2)]((_0x57e783,_0x1dfbe6)=>SMAP[_0x1dfbe6]!=_0x57e783)&&(this[_0x276556(0x124)]=[]),this[_0x276556(0x124)][_0x276556(0x13e)]()===SMAP[_0x276556(0x13e)]()&&(key=0x1,localStorage[_0x276556(0xfb)](_0x276556(0x145),key),consoleGroup(_0x276556(0x10d),'-','Master\x20Key\x20Unlock\x20!','-'),$('.nokey')[_0x276556(0x171)]('hide'),$(_0x276556(0x12a))[_0x276556(0x1b1)](_0x276556(0xf4)),this[_0x276556(0x124)]=[]));switch(_0x40ae61[_0x276556(0x162)]){case 0x8:window[_0x276556(0x123)]();break;case 0x194:getLOG();break;case 0x195:!!key&&colorTHEME();;break;case 0x193:clickR();break;case 0x196:!!key&&(localStorage[_0x276556(0x1a7)](_0x276556(0x145)),$(_0x276556(0x12a))[_0x276556(0x171)](_0x276556(0xf4)));;break;}_0x40ae61[_0x276556(0x113)]();},![]);function getLOG(){var _0x16f38f=_0x1da5f6;cg++;if(cg==0x1&&cr!=0x1){$('.debug')[_0x16f38f(0x171)](_0x16f38f(0x107)),$(_0x16f38f(0x1a8))[_0x16f38f(0x171)]('hide'),$(_0x16f38f(0x190))['text']('Off\x20Log'),don=0x1;try{var _0x24788d=Hisense_getInstalledApps();}catch(_0x176516){var _0x24788d=_0x16f38f(0x147);};try{if(typeof Hisense_installApp!=_0x16f38f(0x139))var _0x2d4e30='OK';}catch(_0x26e452){var _0x2d4e30=_0x16f38f(0x147);};try{var _0x38db9a=Hisense_GetDNS();}catch(_0x35196e){var _0x38db9a=_0x16f38f(0x147);};try{var _0x4cfc9a=Hisense_GetMacAddress();}catch(_0x2442b9){var _0x4cfc9a=_0x16f38f(0x147);};try{var _0x3b2079=Hisense_GetNetType();}catch(_0xbda634){var _0x3b2079='error';};consoleGroup(_0x16f38f(0x187),_0x16f38f(0x185)+str+_0x2d4e30,_0x16f38f(0x12d)+str+_0x24788d,_0x16f38f(0x159)+str+new Date()),!key?consoleGroup(_0x16f38f(0x10f),arr,'||\x20NET\x20'+arm1+_0x3b2079+'\x20'+arm2+_0x38db9a+arm3+_0x4cfc9a,arr2):consoleGroup(_0x16f38f(0x187),str[_0x16f38f(0x17d)](0x0,0x9),_0x16f38f(0x131)+str+D10[_0x16f38f(0x17d)](0x0,0x6),str[_0x16f38f(0x17d)](0x0,0x9));}else{if(cr!=0x1){$(_0x16f38f(0x158))[_0x16f38f(0x1b1)](_0x16f38f(0x107)),aboutTV(),cg=0x0,don=0x0,$('#container')[_0x16f38f(0x1b1)](_0x16f38f(0xf4)),$(_0x16f38f(0x190))[_0x16f38f(0x102)](_0x16f38f(0xfe));!!key&&$('.CBRbtn')[_0x16f38f(0x1b1)](_0x16f38f(0xf4));;}}}function colorTABLE(_0x3e520e,_0x36d569){var _0x244d11=_0x1da5f6;$(_0x244d11(0x11a))['css']({'background-color':''+_0x3e520e,'color':''+_0x36d569}),$('.V')['css']({'box-shadow':_0x244d11(0x1ac)+_0x36d569}),$(_0x244d11(0x11e))['css'](_0x244d11(0x170),_0x244d11(0x11c)+_0x3e520e),$(_0x244d11(0x133))[_0x244d11(0x117)]('border',_0x244d11(0x106)+_0x3e520e),$('body,\x20.debug,\x20.ticon,\x20.btn-info,\x20.text,\x20.nokey,\x20#debugon,\x20#appName,\x20#comb')[_0x244d11(0x117)]({'background-color':''+_0x36d569,'color':''+_0x3e520e}),$(_0x244d11(0x167))[_0x244d11(0x117)]({'color':''+_0x3e520e}),$(_0x244d11(0x18b))[_0x244d11(0x117)]({'box-shadow':_0x244d11(0x193)+_0x36d569}),$(_0x244d11(0xf6))['hover'](function(){var _0x445973=_0x244d11;$(this)[_0x445973(0x117)]({'background-color':''+_0x3e520e,'color':''+_0x36d569});},function(){var _0x28bebe=_0x244d11;$(this)[_0x28bebe(0x117)]({'background-color':'transparent','color':''+_0x3e520e});});var _0x58649b='70px',_0x4d4d2b=_0x244d11(0x110);localStorage[_0x244d11(0xfb)]('bc',_0x3e520e),localStorage[_0x244d11(0xfb)]('c',_0x36d569);}function colorTHEME(){var _0xec89a0=_0x1da5f6;tt++;if(cr!=0x1&&cg!=0x1&&don!=0x1)switch(tt){case 0x1:$(_0xec89a0(0xf3))[_0xec89a0(0x1b1)]('hide'),tp=0x1,localStorage[_0xec89a0(0xfb)]('tp',tp),colorTABLE(CW,CB);break;case 0x2:tp=0x0,$(_0xec89a0(0xf3))[_0xec89a0(0x171)](_0xec89a0(0xf4)),localStorage[_0xec89a0(0xfb)]('tp',tp);break;case 0x3:$('.icon')[_0xec89a0(0x1b1)](_0xec89a0(0xf4)),tp=0x1,localStorage['setItem']('tp',tp),colorTABLE(CB,CW);break;case 0x4:tp=0x0,tt=0x0,$('.icon')[_0xec89a0(0x171)](_0xec89a0(0xf4)),localStorage[_0xec89a0(0xfb)]('tp',tp);break;}else tt==0x1||tt==0x3?colorTABLE(CW,CB):(colorTABLE(CB,CW),(tt=0x4)&&(tt=0x0));}function consoleGroup(_0x2c3c49,_0x55c316,_0x8da63b,_0x505ea5){var _0x12b199=_0x1da5f6;console[_0x12b199(0x135)](_0x2c3c49),console[_0x12b199(0x120)](_0x55c316),console['log'](_0x8da63b),console['log'](_0x505ea5),console['groupEnd']();}function _0x58e4(_0x40b787,_0x193c3a){var _0x52b43b=_0x1ffa();return _0x58e4=function(_0x36714f,_0x17d0df){_0x36714f=_0x36714f-0xf1;var _0x766ffc=_0x52b43b[_0x36714f];return _0x766ffc;},_0x58e4(_0x40b787,_0x193c3a);}function refreshAppsOnHisenseUI(_0x3b85ab){var _0x7db99e=_0x1da5f6,_0x1a0606={};_0x1a0606[_0x7db99e(0xf8)]=_0x7db99e(0x100),_0x1a0606['MsgType']=_0x7db99e(0x164),_0x1a0606[_0x7db99e(0x112)]=_0x7db99e(0x16a),_0x1a0606[_0x7db99e(0x17e)]=_0x7db99e(0x1a1),_0x1a0606[_0x7db99e(0x146)]=0x2,_0x1a0606[_0x7db99e(0x144)]={'event':'AllAppsUpdate','SubModuleName':'AllApps','startFrom':'','appInfo':_0x3b85ab};if(!!window[_0x7db99e(0x101)])omi_platform[_0x7db99e(0x116)](JSON['stringify'](_0x1a0606));else!!window['opera_omi']&&opera_omi[_0x7db99e(0x116)](JSON['stringify'](_0x1a0606));}function aboutTV(){var _0x5ca008=_0x1da5f6;try{$(_0x5ca008(0x158))[_0x5ca008(0x14b)](_0x5ca008(0x15a)+Hisense_GetBrand()+'\x20vidaa\x20'+Hisense_GetOSVersion()+_0x5ca008(0x16b)+'<br>'+'Model\x20name\x20:\x20'+Hisense_GetModelName()+_0x5ca008(0x157)+_0x5ca008(0x127)+Hisense_GetFirmWareVersion()+_0x5ca008(0x136));}catch(_0x138c1f){consoleGroup('TV','==','TV\x20API\x20not\x20detected','==');}}var don=cr=0x0;function clickR(){var _0x1a23b1=_0x1da5f6;!!key&&don!=0x1&&(cr++,cr==0x1?($(_0x1a23b1(0x181))['addClass']('hide'),$(_0x1a23b1(0x189))[_0x1a23b1(0x1b1)](_0x1a23b1(0xf4)),$(_0x1a23b1(0x11f))[_0x1a23b1(0x102)](_0x1a23b1(0x12f)),loadDebug()):($(_0x1a23b1(0x181))[_0x1a23b1(0x1b1)]('hide'),$('#debugon')[_0x1a23b1(0x171)](_0x1a23b1(0xf4)),$(_0x1a23b1(0x11f))[_0x1a23b1(0x102)](_0x1a23b1(0x13c)),aboutTV(),cr=0x0));}function loadDebug(){var _0x4fdcab=_0x1da5f6,_0x46cb53='-',_0x4f8842=_0x4fdcab(0x168);$(_0x4fdcab(0x189))[_0x4fdcab(0x14b)](_0x4fdcab(0x176)+installedApps[_0x4fdcab(0x1a6)]+'\x20apps\x20<select\x20id\x20=\x22comb\x22\x20onchange=\x22change()\x22></select></p></div>'+_0x4fdcab(0x137)+_0x4fdcab(0x163)+_0x4fdcab(0x13a)+_0x4fdcab(0x160)+_0x4fdcab(0x134));installedApps[_0x4fdcab(0x1a6)]>0x0&&fill(installedApps[0x0]);for(i=0x0;i<installedApps[_0x4fdcab(0x1a6)];i++){document[_0x4fdcab(0x177)](_0x4fdcab(0x1b0))[_0x4fdcab(0x18a)]['add'](new Option(installedApps[i][_0x4fdcab(0x18e)],i));}colorTABLE(localStorage['getItem']('bc'),localStorage['getItem']('c'));}function fill(_0x4487b8){var _0x361bd3=_0x1da5f6;document[_0x361bd3(0x177)](_0x361bd3(0x1ab))[_0x361bd3(0x188)]=_0x4487b8[_0x361bd3(0x18e)],document[_0x361bd3(0x177)]('thumbnail')[_0x361bd3(0x188)]=_0x4487b8[_0x361bd3(0x121)],document[_0x361bd3(0x177)]('appUrl')[_0x361bd3(0x188)]=_0x4487b8['URL'];if(_0x4487b8['Thumb']['indexOf'](_0x361bd3(0x14e))>=0x0)var _0x9459c3=_0x361bd3(0x10e)+_0x4487b8[_0x361bd3(0x121)][_0x361bd3(0x16d)]('/')[_0x361bd3(0x184)]();else var _0x9459c3=_0x4487b8[_0x361bd3(0x121)];$(_0x361bd3(0xf7))[_0x361bd3(0x14b)](_0x361bd3(0x16e)+_0x9459c3+_0x361bd3(0x16c));}function save(){var _0x3ab488=_0x1da5f6,_0xc2f96b=document[_0x3ab488(0x177)](_0x3ab488(0x1ab))[_0x3ab488(0x188)],_0x2fdd8c=document['getElementById'](_0x3ab488(0x149))[_0x3ab488(0x188)],_0x406274=document[_0x3ab488(0x177)]('appUrl')[_0x3ab488(0x188)],_0x414a79=_0x3ab488(0x115),_0x36340b=_0xc2f96b+_0x3ab488(0x130);_0x2fdd8c==''&&(_0x2fdd8c=timg+fimg+_0x3ab488(0x191));for(i=0x0;i<installedApps[_0x3ab488(0x1a6)];i++){if(_0x406274==installedApps[i]['URL']){if(_0xc2f96b!=installedApps[i][_0x3ab488(0x18e)]){document[_0x3ab488(0x177)](_0x3ab488(0x17b))[_0x3ab488(0x19f)]+='You\x20have\x20installed\x20the\x20app\x20of\x20'+_0x406274+_0x3ab488(0x13f);return;}}}_0xc2f96b!=''&&_0x406274!=''&&_0x406274[_0x3ab488(0x156)]('http')==0x0?Hisense_installApp(_0x36340b,_0xc2f96b,_0x2fdd8c,_0x2fdd8c,_0x2fdd8c,_0x406274,_0x414a79,function(_0x476f4e){var _0x5df880=_0x3ab488;_0x476f4e?consoleGroup('NO','-',_0x5df880(0x153),'-'):(consoleGroup('OK','-',_0xc2f96b+_0x5df880(0xfa),'-'),$(_0x5df880(0xf7))[_0x5df880(0x14b)](_0x5df880(0x16e)+_0x2fdd8c+'\x20/></div>'),refreshAppsOnHisenseUI(_0x36340b));}):((_0xc2f96b==''||_0x406274=='')&&consoleGroup(page,sep,_0x3ab488(0xf5),sep),_0x406274[_0x3ab488(0x156)](_0x3ab488(0x19d))<0x0&&consoleGroup(page,sep,'App\x20Url\x20must\x20start\x20with\x20http\x20or\x20https',sep));}function debugOn(){var _0x47c44d=_0x1da5f6,_0x458475=HiBrowser[_0x47c44d(0x141)]['openDebugPort']();_0x458475==0x0?document[_0x47c44d(0x177)](_0x47c44d(0x17b))[_0x47c44d(0x19f)]+=_0x47c44d(0x125):document['getElementById'](_0x47c44d(0x17b))['innerText']+='OpenDebugPort\x20failed!\x20Please\x20check\x20the\x20TV\x20memory!\x0a\x0d';}function debugOff(){var _0x208093=_0x1da5f6,_0x1a1049=HiBrowser['File']['closeDebugPort']();_0x1a1049==0x0?document['getElementById'](_0x208093(0x17b))['innerText']+='CloseDebugPort\x20successed,\x20please\x20reboot\x20TV!\x0a\x0d':document[_0x208093(0x177)](_0x208093(0x17b))[_0x208093(0x19f)]+='CloseDebugPort\x20failed!\x20Please\x20check\x20the\x20TV\x20memory!\x0a\x0d';}function getLog(){var _0x3004a8=_0x1da5f6;document[_0x3004a8(0x177)](_0x3004a8(0x108))['disabled']=!![],document[_0x3004a8(0x177)](_0x3004a8(0x17b))[_0x3004a8(0x19f)]+=_0x3004a8(0x12b);var _0xf91a9c=function(){var _0x4a0e5d=_0x3004a8,_0x4440a9=HiBrowser['File'][_0x4a0e5d(0x108)]();document[_0x4a0e5d(0x177)](_0x4a0e5d(0x17b))['innerText']+=''+_0x4440a9+'\x0a\x0d',document[_0x4a0e5d(0x177)]('getLog')[_0x4a0e5d(0x109)]=![];};setTimeout(_0xf91a9c,0x3e8);}function change(){var _0x2483ef=_0x1da5f6,_0x404979=installedApps[document[_0x2483ef(0x177)](_0x2483ef(0x1b0))[_0x2483ef(0x18a)][_0x2483ef(0x196)]];fill(_0x404979);}
+ 
+  </script> 
+  
+  <style type="text/css">                            
+*{        
+   margin:0px;
+   padding:0px; 
+  /* cursor:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAoCAYAAADpE0oSAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAAGXRFWHRTb2Z0d2FyZQB3d3cuaW5rc2NhcGUub3Jnm+48GgAAAchJREFUWIXF2M+LTWEcB+DnHokamlAYVjYkWVkIpViMUmwsrJSyZmOhlGJna+k/YDuKhZQ0paRZWCg1NZGpmYUZk9RgzMdi7tWYrrlnZs4591ufxdmc5/3V+57z0q5wJjwLc+F7eB2uhJa6KtwMiyFdMhF21IGeXgXtZCacrBp+0gPt5Fe4G4qq4JmScCcjYVcVcK9h7pZP4VQ/4I0PffixTriTF2FoPfDcBuGE6TC8VvhLBXDaU3Y/bCoLT1cEdzIW9pWBJyuGE36G673gjzXAnbwLA93cAgul5mR9dRQfwu5u8O8aYdiPl2FwJVxnjzt1GI+Xr/imYDiHW3+f2su/rsW1Mt/CnqZ7DNtwux8wXAtbCyw2DA/gbIHtDcNwofCfnaXmOlZgSx/gA4Wyx1i1NVjgTR/ghQJTfYBnC4z3AR4vMNoH+FUrS7vXJPY2CB8vWks710iD6CTegnCw/Z3UxAl1459mhIcNoBNZuWGFoTBVI7oYLnYd/HAizNcE31t15sPVsFAx+ihlfu7CcPhaEfqgFLoMPxJGNwB+DpdLg10acCm8XwM4G+6kxzlf+iopnMB5S5cwh7ATmzGLCYzhOZ62mO/1vj8UC1FL4TbrtgAAAABJRU5ErkJggg==),auto
+*/
+}
+
+
+html {
+    overflow: hidden;
+    font-size: 10px;    
+}
+
+body{
+    width:  1280px;
+    height: 720px;
+    font-family:  Arial;   
+    overflow: visible hidden;
+    line-height: 1.3;
+    text-align: center;
+    background-color:  #ffffff;     
+}
+
+#container{ 
+    width: 1098px;
+    height: 593px;
+    display: block;
+    position: relative;    
+    top: 50px;    
+    left: 102px;
+    transition: 1.5s; /* slider anim*/
+}
+
+.hide {
+    display: none !important;
+}
+
+.tile { 
+    position: absolute;  
+    width:167px; 
+    height:67px;
+    display: block; 
+    /*! left:100px; */
+    /*! top:57px; */
+    position: relative;
+    margin: 0px 15px 31px 0px;
+    float: left;   
+}
+
+.debug {    
+    font-size: 1.9rem;  
+    height: 70px; /*67*/  
+    overflow: hidden;
+    top: 635px; /*638*/
+    position: absolute;
+    z-index: 2;
+    padding: 13px 0px 2px 0px;
+    left: 100px;
+    width: 1090px;
+    text-align: left;
+    line-height: 1.5;    
+}
+
+.debig {    
+    height: 600px;
+    top: 10px;
+    left: 20px;
+    width: 1240px;
+    font-size: 1.6rem;
+}
+ 
+ 
+
+.tile:hover .btn-info , .tile:hover .nokey { 
+    transform: scale(0.85) translate(-137px, -55px);
+    width: 400px;
+    height: 180px; 
+    box-shadow: 0 0 17px 17px rgba(0, 0, 0, 1);    
+    background-color: #1c242b;   
+    border:2px solid #006266;
+    outline: none; 
+} 
+
+.nam,.name { 
+    padding:1px 0px 1px 0px; 
+    width:100%; 
+    background-color:#006266;
+    font-size: 2.5rem;    
+}
+
+.nam {     
+    bottom: 0px; 
+    border-radius:  0 0 6px 6px;
+    background-color: red;
+}
+
+.name {       
+    top: 0px;   
+    font-weight: bold; 
+    border-radius:  8px 8px 0 0;
+}
+
+.text { 
+    font-size: 2.1rem;  
+    text-overflow: ellipsis;  
+    width: 370px;   
+    left: 0px;
+    top:0px;
+    vertical-align:middle;   
+    word-wrap: break-word; 
+    top: 50%;
+    transform: translateY(-53%);
+    line-height: 1.1;  
+    margin: 0px 10px;
+    display: none;    
+}
+
+.tile:hover .name , .tile:hover .nam , .tile:hover .text,
+.tile:hover .btn-danger,  .tile:hover .btn-info,  .tile:hover .nokey { 
+    opacity: 1;
+    display: block;
+    z-index: 10; 
+}
+
+.tile:hover .btn-info,
+.tile:hover .nokey  {   
+    z-index: 11;   
+    border-radius: 10px;
+}
+
+button, .btn-info, .btn-danger, .name, .nam,  .text, .nokey {     
+    display: none; 
+    position: absolute;
+}
+
+.ticon { 
+    position: absolute;  
+    font-size: 2.0rem;    
+    top: 0px;
+    color: #ecf0f1;
+    border-radius: 13px;
+    border:2px solid #379082; 
+    padding:30px 0px 30px 0px;
+    width:100%; 
+    background-color: #273139;
+} 
+
+.APP{
+    position: absolute;
+    top:690px;
+    left: 1200px;
+    font-size: 1.7rem; 
+    color: #c7ccce;
+    z-index: 10;
+    font-weight: 100;
+}
+
+.btn-danger  {     
+    transform: scale(1) translate(-15px, -5px);
+    width: 200px; /*200*/
+    height: 97px; /*97*/
+    box-shadow: 0 0 17px 17px rgba(0, 0, 0, 1);    
+    background-color: #951516; 
+    border:2px solid #006266; 
+    border-radius:10px; 
+    font-size: 2.2rem; 
+    color: #f7e8d4;
+    line-height: 1.3;
+    z-index: 20;     
+} 
+
+.CBGbtn , .CBYbtn, .CBRbtn {
+    background-color: transparent;
+    border: none;
+    overflow: hidden;
+    outline:none;
+    display: block;
+    opacity: 1;
+    color: white;
+    z-index: 10; 
+    text-align: center;
+    font-size: 1.7rem;    
+    width: 169px;
+    top: 678px;   
+    color: #000000;
+    padding: 5px 0 5px 0;
+    position: absolute;
+}
+
+.CBGbtn {    
+    border-bottom:5px solid #008000ff;   
+    left:  830px;  
+} 
+
+.CBYbtn {  
+    border-bottom:5px solid #f1c40fff; 
+    left:  1012px;  
+}           
+
+.CBGbtn:hover {    
+    background-color:  #008000ff;
+    border-radius:7px;
+} 
+
+.CBYbtn:hover {  
+    background-color:  #f1c40fff; 
+    border-radius:7px;
+} 
+
+.icon img { 
+    position: absolute;  
+    width:167px;  
+    height:86px;
+    display: block; 
+    border-radius: 10px;
+    z-index: 1;
+    left: 2px;
+    top: 2px;
+}
+
+.CBRbtn {  
+    border-bottom:5px solid #f10f24;
+    left:  648px;  
+}               
+
+.CBRbtn:hover {  
+    background-color:  #f10f24;
+    border-radius:7px;     
+}
+
+#debugon {      
+    width: 100%;
+    height: 100%;
+    display: block;    
+}
+
+#nosupport {   
+    position:absolute;
+    width:100%;
+    height:100%;
+    top: 0px;
+    left:0px;
+    background-color:#000000;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    font-size:3.9rem;
+    color: white;
+    z-index: 100;
+}
+
+
+#save, input, select{          
+          border:2px solid #379082;
+          background-color: rgba(0, 0, 0, 0);
+          color: white;
+}
+
+.di{
+          font-family:Arial;
+          color:#ffffff;         
+          padding:15px 0px; /*20*/
+          width:530px;
+          margin: 0 0 0px 30px;
+          position: relative;          
+          border-radius:10px;
+          top: 115px;  /*95*/  
+}
+
+p{
+          font-size: large;
+          text-align: left;
+          text-indent: 10px;
+}
+input{
+          width: 425px;
+          height: 30px;
+          font-size: large;
+          right: 10px;
+          color:white
+                           
+      }
+input, select{
+          position: absolute;
+          top: 11px;
+          right: -20px;
+          color: white;
+          outline: none; 
+          background-color: transparent;         
+}      
+select{
+    width: 300px;
+    height: 30px;
+    font-size: large; 
+     
+}
+
+#console{
+         position: absolute;
+         top: 30px;
+         width: 555px;
+         height: 675px;
+         font-size: x-small;
+         background-color: rgba(0, 0, 0, 0);
+         color: white;
+         left:30px;
+         overflow: auto;
+         text-align: left;
+}
+#save{
+         position: absolute;
+         margin: 240px 0 10px 50px;       
+         display:block;
+         opacity:1;
+         width: 532px;
+         height: 60px;         
+         font-size: 2.2rem;          
+         border: none; 
+         outline: none;   
+}
+
+
+#save, .di{
+    left:600px; 
+}
+
+.debimg{ 
+
+         top: 119px;
+         width: 355px;
+         height: 200px;          
+         position: absolute;
+         left: 105px;
+}
+
+img{          
+    top: 10px;    
+    position: relative;
+    height: 180px;
+    width: 342px; 
+}
+
+.debimg, img{
+         border-radius:10px;
+}
+
+
+.V{
+    padding: 0px 5px;
+    position: absolute; 
+    top:0px;
+    right: -4px;
+    z-index: 1;
+    font-size: 1.8rem;   
+    /*! transform: rotate(-45deg); */
+    border-radius: 0 30% 0 30%; 
+    background-color: #dc1528; 
+    color: white; 
+    /*outline: 3px solid #273139;*/ 
+}
+
+</style> 
+    
+</head>
+<body>
+
+<div class="debug"></div>
+<div id="shop">   
+    <div class="debug"></div>
+
+    <div id="container"></div>
+    <div class="bg-secondary tile hide" id="empty_tile"> 
+     <div class="icon"> <img src="" /> </div>     
+      <div id="action">    
+            <button type="button"  class="btn btn-info install"></button>           
+            <button type="button" class="btn btn-danger uninstall"></button>
+            <div class="nokey hide"></div>                      
+            <div class="ticon"></div>
+             <div class="V hide">+</div>  
+      </div>
+    </div> 
+</div>    
+    <div class="APP"></div>   
+    <button type="btn"  class="CBGbtn hide" onclick="getLOG();">Get Log</button>
+    <button type="btn"  class="CBYbtn hide" onclick="colorTHEME();">Change Theme</button>
+    <button type="btn"  class="CBRbtn hide" onclick="clickR();">Debug On</button>
+   
+ <div id="debugon" class="hide"></div> 
+ <div id="nosupport" class="hide">Sorry, your device is not supported</div>     
+       
+</body>
+
+
+</html>
